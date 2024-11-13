@@ -1,6 +1,6 @@
 // Initialize Sketchfab Viewer
 const iframe = document.getElementById("api-frame");
-const uid = "b95f24d793a440d08e0046a5174e8c7c"; // Replace with your model's UID
+const uid = "4cc9cac1684740d88afa3ba5708b5da5"; // Replace with your model's UID
 let api;
 const version = "1.12.1";
 let base = {};
@@ -58,9 +58,9 @@ function setColor(materialName, hexcode) {
 }
 
 const grillTypes = {
-  prairie: [457, 1019],
-  traditional: [634, 1196],
-  topRow: [558, 1120],
+  prairie: [457, 1058],
+  traditional: [658, 1235],
+  topRow: [558, 1159],
 };
 const handleID = 412;
 
