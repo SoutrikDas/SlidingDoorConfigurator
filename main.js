@@ -257,30 +257,64 @@ document
   .addEventListener("input", sliderHandler);
 
 document.querySelectorAll(".interior-color").forEach((element) => {
-  element.addEventListener("click", colorSelectHandler);
+  element.addEventListener("click", interiorColorSelectHandler);
 });
 
-function colorSelectHandler(event) {
+function interiorColorSelectHandler(event) {
   const selectedColor = event.target.getAttribute("data-color");
   console.log(`Selected color : ${selectedColor}`);
 
   interiorColor = selectedColor;
-  setColor("Exterior", interiorColors[interiorColor]);
+  setColor("Interior", interiorColors[interiorColor]);
+  if (interiorColor === "white") {
+    showAllExteriorColors();
+  } else {
+    // Otherwise, show only the exterior colors that match the interior color
+    updateExteriorColorOptions(interiorColor);
+    setColor("Exterior", interiorColors[interiorColor]);
+  }
 }
 
-// Function to update available exterior color options based on the selected interior color
-function updateExteriorColorOptions(selectedInteriorColor) {
+function showAllExteriorColors() {
+  // Show all exterior color circles
+  const exteriorColorCircles = document.querySelectorAll(".exterior-color");
   exteriorColorCircles.forEach((circle) => {
-    const circleColor = circle.getAttribute("data-color").split("-")[1];
-    if (selectedInteriorColor === "white") {
-      // White interior restricts exterior to White only
-      circle.style.display = circleColor === "white" ? "inline-block" : "none";
-    } else {
-      // Show all exterior colors
+    circle.style.display = "inline-block";
+  });
+}
+document.querySelectorAll(".exterior-color").forEach((element) => {
+  element.addEventListener("click", exteriorColorSelectHandler);
+});
+
+function updateExteriorColorOptions(selectedInteriorColor) {
+  const exteriorColorCircles = document.querySelectorAll(".exterior-color");
+
+  exteriorColorCircles.forEach((circle) => {
+    const exteriorColor = circle.getAttribute("data-color");
+
+    // If the interior color is not white, match the exterior colors to the selected interior color
+    if (selectedInteriorColor === exteriorColor) {
+      console.log(
+        `for interior : ${selectedInteriorColor} and exterior: ${exteriorColor} decision is same`
+      );
+      // Show the matching exterior color
       circle.style.display = "inline-block";
+    } else {
+      // Hide the non-matching exterior colors
+      circle.style.display = "none";
     }
   });
 }
+
+function exteriorColorSelectHandler(event) {
+  const selectedColor = event.target.getAttribute("data-color");
+  console.log(`Selected color : ${selectedColor}`);
+
+  exteriorColor = selectedColor;
+  setColor("Exterior", interiorColors[exteriorColor]);
+}
+
+// Function to update available exterior color options based on the selected interior colo
 
 // Handle Grill Type Selection
 const grillButtons = document.querySelectorAll(".grill-button");
@@ -308,15 +342,15 @@ function updateGrillButtonStyles(selectedGrill) {
 }
 
 // Handle Lock (Handle) Color Selection
-const lockButtons = document.querySelectorAll(".lock-button");
+// const lockButtons = document.querySelectorAll(".lock-button");
 
-lockButtons.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    const selectedLockColor = e.target.style.backgroundColor;
-    console.log(`Lock (Handle) color selected: ${selectedLockColor}`);
-    updateLockButtonStyles(e.target);
-  });
-});
+// lockButtons.forEach((button) => {
+//   button.addEventListener("click", (e) => {
+//     const selectedLockColor = e.target.style.backgroundColor;
+//     console.log(`Lock (Handle) color selected: ${selectedLockColor}`);
+//     updateLockButtonStyles(e.target);
+//   });
+// });
 
 function logAllMaterials(api) {
   // Get the list of all materials in the scene
@@ -335,9 +369,252 @@ function logAllMaterials(api) {
 }
 
 // Update button styles when lock color is selected
-function updateLockButtonStyles(selectedButton) {
-  lockButtons.forEach((button) => {
-    button.classList.remove("border-4", "border-blue-500");
+// function updateLockButtonStyles(selectedButton) {
+//   lockButtons.forEach((button) => {
+//     button.classList.remove("border-4", "border-blue-500");
+//   });
+//   selectedButton.classList.add("border-4", "border-blue-500");
+// }
+
+// Function to handle color selection and apply material customization
+document.querySelectorAll(".lock-button").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    const selectedColor = event.target.getAttribute("data-color");
+    console.log(`Selected Color: ${selectedColor}`);
+
+    // Call the corresponding function for each color
+    switch (selectedColor) {
+      case "bright-brass":
+        applyBrightBrassColor();
+        break;
+      case "morning-sky-gray":
+        applyMorningSkyGrayColor();
+        break;
+      case "oil-rubbed-bronze":
+        applyOilRubbedBronzeColor();
+        break;
+      case "satin-nickel":
+        applySatinNickelColor();
+        break;
+      case "white":
+        applyWhiteColor();
+        break;
+      default:
+        console.log("Unknown color selected");
+    }
   });
-  selectedButton.classList.add("border-4", "border-blue-500");
+});
+
+// Function for "Bright Brass" color
+// Function to apply Bright Brass customizations
+function applyBrightBrassColor() {
+  console.log("Applying Bright Brass Customization");
+
+  // Loop through the materials to find "HandleMaterial"
+  var materialToChange;
+  for (var i = 0; i < myMaterials.length; i++) {
+    var m = myMaterials[i];
+    if (m.name === "HandleMaterial") {
+      materialToChange = m;
+      console.log(`Material to Change has been found: ${m.name}`);
+      break;
+    }
+  }
+
+  // If the material is found, customize it
+  if (materialToChange) {
+    // Set DiffuseColor (Base Color)
+    materialToChange.channels.AlbedoPBR.factor = 1;
+    materialToChange.channels.AlbedoPBR.enable = true;
+    materialToChange.channels.AlbedoPBR.color = [
+      234 / 255,
+      221 / 255,
+      112 / 255,
+    ]; // RGB to [0, 1] range for Bright Brass
+
+    // Set GlossinessPBR (shininess)
+    materialToChange.channels.GlossinessPBR.factor = 0.85; // High gloss for Bright Brass
+
+    // Set MetalnessPBR (reflectivity)
+    materialToChange.channels.MetalnessPBR.factor = 0.9; // High metalness for a metallic look
+
+    // Optionally, you could adjust other channels as well, e.g., Specular, Roughness, etc.
+    materialToChange.channels.RoughnessPBR.factor = 0.2; // Low roughness for a smooth, shiny surface
+
+    // Optionally, adjust SpecularPBR or other channels for more realistic material effects
+    materialToChange.channels.SpecularPBR.factor = 0.9; // High specularity to simulate shiny surface
+
+    // Apply the changes using the Sketchfab API
+    api.setMaterial(materialToChange, function () {
+      console.log("Bright Brass material updated successfully");
+    });
+  } else {
+    console.log("HandleMaterial not found");
+  }
+}
+
+// Function for "Morning Sky Gray" color
+function applyMorningSkyGrayColor() {
+  console.log("Applying Morning Sky Gray Customization");
+
+  // Loop through the materials to find "HandleMaterial"
+  var materialToChange;
+  for (var i = 0; i < myMaterials.length; i++) {
+    var m = myMaterials[i];
+    if (m.name === "HandleMaterial") {
+      materialToChange = m;
+      console.log(`Material to Change has been found: ${m.name}`);
+      break;
+    }
+  }
+
+  // If the material is found, customize it
+  if (materialToChange) {
+    // Set AlbedoPBR (Base Color)
+    materialToChange.channels.AlbedoPBR.factor = 1;
+    materialToChange.channels.AlbedoPBR.enable = true;
+    materialToChange.channels.AlbedoPBR.color = [
+      188 / 255, // R value for Morning Sky Gray
+      188 / 255, // G value for Morning Sky Gray
+      188 / 255, // B value for Morning Sky Gray
+    ]; // RGB to [0, 1] range
+
+    // Set GlossinessPBR (shininess) - low gloss for matte plastic
+    materialToChange.channels.GlossinessPBR.factor = 0.25; // Matte finish
+
+    // Set MetalnessPBR (reflectivity) - low metalness for a matte plastic
+    materialToChange.channels.MetalnessPBR.factor = 0.3; // Slight metallic, but still mainly plastic
+
+    // Set RoughnessPBR (smoothness) - high roughness for matte finish
+    materialToChange.channels.RoughnessPBR.factor = 0.75; // Rough surface for matte plastic
+
+    // Set SpecularPBR (reflectivity) - low specularity for matte finish
+    materialToChange.channels.SpecularPBR.factor = 0.3; // Lower specularity to simulate matte
+
+    // Apply the changes using the Sketchfab API
+    api.setMaterial(materialToChange, function () {
+      console.log("Morning Sky Gray material updated successfully");
+    });
+  } else {
+    console.log("HandleMaterial not found");
+  }
+}
+
+// Function for "Oil Rubbed Bronze" color
+function applyOilRubbedBronzeColor() {
+  console.log("Applying Oil Rubbed Bronze Customization");
+
+  // Loop through the materials to find "HandleMaterial"
+  var materialToChange;
+  for (var i = 0; i < myMaterials.length; i++) {
+    var m = myMaterials[i];
+    if (m.name === "HandleMaterial") {
+      materialToChange = m;
+      console.log(`Material to Change has been found: ${m.name}`);
+      break;
+    }
+  }
+
+  // If the material is found, customize it
+  if (materialToChange) {
+    // Set AlbedoPBR (Base Color)
+    materialToChange.channels.AlbedoPBR.factor = 1;
+    materialToChange.channels.AlbedoPBR.enable = true;
+    materialToChange.channels.AlbedoPBR.color = [
+      59 / 255, // R value for Oil Rubbed Bronze
+      56 / 255, // G value for Oil Rubbed Bronze
+      51 / 255, // B value for Oil Rubbed Bronze
+    ]; // RGB to [0, 1] range
+
+    // Set GlossinessPBR (shininess) - slightly reflective, but still matte
+    materialToChange.channels.GlossinessPBR.factor = 0.4; // Moderate gloss for slightly reflective finish
+
+    // Set MetalnessPBR (reflectivity) - high metalness for aged bronze effect
+    materialToChange.channels.MetalnessPBR.factor = 0.7; // High metalness to reflect the bronze nature
+
+    // Set RoughnessPBR (smoothness) - matte but slightly smooth
+    materialToChange.channels.RoughnessPBR.factor = 0.55; // Slight roughness for matte bronze look
+
+    // Set SpecularPBR (reflectivity) - moderate specularity for subtle reflections
+    materialToChange.channels.SpecularPBR.factor = 0.5; // Moderate specularity to simulate slight reflections
+
+    // Apply the changes using the Sketchfab API
+    api.setMaterial(materialToChange, function () {
+      console.log("Oil Rubbed Bronze material updated successfully");
+    });
+  } else {
+    console.log("HandleMaterial not found");
+  }
+}
+
+// Function for "Satin Nickel" color
+function applySatinNickelColor() {
+  console.log("Applying Satin Nickel Customization");
+
+  var materialToChange;
+  for (var i = 0; i < myMaterials.length; i++) {
+    var m = myMaterials[i];
+    if (m.name === "HandleMaterial") {
+      materialToChange = m;
+      console.log(`Material to Change has been found: ${m.name}`);
+      break;
+    }
+  }
+
+  if (materialToChange) {
+    materialToChange.channels.AlbedoPBR.factor = 1;
+    materialToChange.channels.AlbedoPBR.enable = true;
+    materialToChange.channels.AlbedoPBR.color = [
+      187 / 255,
+      177 / 255,
+      165 / 255,
+    ];
+
+    materialToChange.channels.GlossinessPBR.factor = 0.9;
+    materialToChange.channels.MetalnessPBR.factor = 0.95;
+    materialToChange.channels.RoughnessPBR.factor = 0.15;
+    materialToChange.channels.SpecularPBR.factor = 0.85;
+
+    api.setMaterial(materialToChange, function () {
+      console.log("Satin Nickel material updated successfully");
+    });
+  } else {
+    console.log("HandleMaterial not found");
+  }
+}
+
+// Function for "White" color
+function applyWhiteColor() {
+  console.log("Applying White Customization");
+
+  var materialToChange;
+  for (var i = 0; i < myMaterials.length; i++) {
+    var m = myMaterials[i];
+    if (m.name === "HandleMaterial") {
+      materialToChange = m;
+      console.log(`Material to Change has been found: ${m.name}`);
+      break;
+    }
+  }
+
+  if (materialToChange) {
+    materialToChange.channels.AlbedoPBR.factor = 1;
+    materialToChange.channels.AlbedoPBR.enable = true;
+    materialToChange.channels.AlbedoPBR.color = [
+      238 / 255,
+      235 / 255,
+      236 / 255,
+    ];
+
+    materialToChange.channels.GlossinessPBR.factor = 0.3; // Less glossy, more matte
+    materialToChange.channels.MetalnessPBR.factor = 0.1; // Low reflectivity
+    materialToChange.channels.RoughnessPBR.factor = 0.75; // More rough for matte finish
+    materialToChange.channels.SpecularPBR.factor = 0.4; // Less specular for a more diffused reflection
+
+    api.setMaterial(materialToChange, function () {
+      console.log("White material updated successfully");
+    });
+  } else {
+    console.log("HandleMaterial not found");
+  }
 }

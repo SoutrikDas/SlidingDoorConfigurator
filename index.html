@@ -105,33 +105,33 @@
             <!-- Color Circles for Exterior Color -->
             <!-- Will be dynamically shown/hidden based on the selected Interior Color -->
             <div
-              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              class="exterior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
               style="background-color: #f3f4f5"
-              data-color="exterior-white"
+              data-color="white"
               title="White"
             ></div>
             <div
-              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              class="exterior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
               style="background-color: #16151c"
-              data-color="exterior-black"
+              data-color="black"
               title="Black"
             ></div>
             <div
-              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              class="exterior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
               style="background-color: #514431"
-              data-color="exterior-brown"
+              data-color="brown"
               title="Brown"
             ></div>
             <div
-              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              class="exterior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
               style="background-color: #c8baa5"
-              data-color="exterior-tan"
+              data-color="tan"
               title="Tan"
             ></div>
             <div
-              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              class="exterior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
               style="background-color: #cecfd0"
-              data-color="exterior-morning-sky-gray"
+              data-color="morning-sky-gray"
               title="Morning Sky Gray"
             ></div>
           </div>
@@ -168,17 +168,45 @@
             Lock (Handle) Color
           </h3>
           <div class="flex flex-wrap gap-4">
-            <!-- Placeholder for lock color buttons (You can fill these with actual color options later) -->
+            <!-- Bright Brass Color Circle -->
             <button
-              class="lock-button w-12 h-12 bg-gray-300 rounded-full hover:bg-gray-400"
+              class="lock-button w-12 h-12 rounded-full"
+              style="background-color: rgb(234, 221, 112)"
+              data-color="bright-brass"
+              title="Bright Brass"
             ></button>
+
+            <!-- Morning Sky Gray Color Circle -->
             <button
-              class="lock-button w-12 h-12 bg-gray-400 rounded-full hover:bg-gray-500"
+              class="lock-button w-12 h-12 rounded-full"
+              style="background-color: rgb(188, 188, 188)"
+              data-color="morning-sky-gray"
+              title="Morning Sky Gray"
             ></button>
+
+            <!-- Oil Rubbed Bronze Color Circle -->
             <button
-              class="lock-button w-12 h-12 bg-gray-500 rounded-full hover:bg-gray-600"
+              class="lock-button w-12 h-12 rounded-full"
+              style="background-color: rgb(59, 56, 51)"
+              data-color="oil-rubbed-bronze"
+              title="Oil Rubbed Bronze"
             ></button>
-            <!-- Add more lock colors as necessary -->
+
+            <!-- Satin Nickel Color Circle -->
+            <button
+              class="lock-button w-12 h-12 rounded-full"
+              style="background-color: rgb(187, 177, 165)"
+              data-color="satin-nickel"
+              title="Satin Nickel"
+            ></button>
+
+            <!-- White Color Circle -->
+            <button
+              class="lock-button w-12 h-12 rounded-full"
+              style="background-color: rgb(238, 235, 236)"
+              data-color="white"
+              title="White"
+            ></button>
           </div>
         </div>
       </div>
