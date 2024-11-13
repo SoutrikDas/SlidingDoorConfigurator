@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+    <title>Embeddable Widget</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container">
+      <!-- Left Panel: Sketchfab Iframe -->
+      <div class="iframe-container">
+        <iframe
+          src=""
+          id="api-frame"
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+          class="w-full h-full"
+          frameborder="0"
+        ></iframe>
+      </div>
+
+      <!-- Right Panel: Controls -->
+      <div class="controls p-6 bg-white shadow-lg rounded-lg w-96">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Settings</h2>
+
+        <!-- Door Slider -->
+        <div class="door-slider mb-6">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Door Slider</h3>
+          <div class="flex flex-col">
+            <!-- Primary Slider -->
+            <div class="slider-container">
+              <label for="primarySlider" class="text-sm text-gray-600"
+                >Door Position</label
+              >
+              <input
+                node="98"
+                type="range"
+                id="primarySlider"
+                class="slider w-full"
+                min="0"
+                max="0.75"
+                value="0"
+                step="0.05"
+              />
+              <span
+                class="slider-value block text-center mt-2"
+                id="primarySliderValue"
+                >0</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Interior and Exterior Colors -->
+        <div class="interior-color-selection mb-6">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Interior Color</h3>
+          <div class="flex space-x-4">
+            <!-- Color Circles for Interior Color -->
+            <div
+              class="interior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300"
+              style="background-color: #f3f4f5"
+              data-color="white"
+              title="White"
+            ></div>
+            <div
+              class="interior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300"
+              style="background-color: #16151c"
+              data-color="black"
+              title="Black"
+            ></div>
+            <div
+              class="interior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300"
+              style="background-color: #514431"
+              data-color="brown"
+              title="Brown"
+            ></div>
+            <div
+              class="interior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300"
+              style="background-color: #c8baa5"
+              data-color="tan"
+              title="Tan"
+            ></div>
+            <div
+              class="interior-color color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300"
+              style="background-color: #cecfd0"
+              data-color="morning-sky-gray"
+              title="Morning Sky Gray"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Exterior Color Selection -->
+        <div class="exterior-color-selection mb-6">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Exterior Color</h3>
+          <div class="flex space-x-4">
+            <!-- Color Circles for Exterior Color -->
+            <!-- Will be dynamically shown/hidden based on the selected Interior Color -->
+            <div
+              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              style="background-color: #f3f4f5"
+              data-color="exterior-white"
+              title="White"
+            ></div>
+            <div
+              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              style="background-color: #16151c"
+              data-color="exterior-black"
+              title="Black"
+            ></div>
+            <div
+              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              style="background-color: #514431"
+              data-color="exterior-brown"
+              title="Brown"
+            ></div>
+            <div
+              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              style="background-color: #c8baa5"
+              data-color="exterior-tan"
+              title="Tan"
+            ></div>
+            <div
+              class="color-circle w-12 h-12 rounded-full cursor-pointer border-2 border-gray-300 hidden"
+              style="background-color: #cecfd0"
+              data-color="exterior-morning-sky-gray"
+              title="Morning Sky Gray"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Grill Style Selection -->
+        <div class="grill-selection mb-6">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">Grill Type</h3>
+          <div class="flex space-x-4">
+            <button
+              id="traditional"
+              class="grill-button w-24 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            >
+              Traditional
+            </button>
+            <button
+              id="prairie"
+              class="grill-button w-24 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+            >
+              Prairie
+            </button>
+            <button
+              id="topRow"
+              class="grill-button w-24 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
+            >
+              Top Row
+            </button>
+          </div>
+        </div>
+
+        <!-- Lock (Handle) Color Selection -->
+        <div class="lock-color-selection mb-6">
+          <h3 class="text-lg font-medium text-gray-700 mb-2">
+            Lock (Handle) Color
+          </h3>
+          <div class="flex flex-wrap gap-4">
+            <!-- Placeholder for lock color buttons (You can fill these with actual color options later) -->
+            <button
+              class="lock-button w-12 h-12 bg-gray-300 rounded-full hover:bg-gray-400"
+            ></button>
+            <button
+              class="lock-button w-12 h-12 bg-gray-400 rounded-full hover:bg-gray-500"
+            ></button>
+            <button
+              class="lock-button w-12 h-12 bg-gray-500 rounded-full hover:bg-gray-600"
+            ></button>
+            <!-- Add more lock colors as necessary -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
