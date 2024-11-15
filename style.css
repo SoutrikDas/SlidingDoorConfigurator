@@ -55,11 +55,30 @@ body {
 .slider-container label {
   display: block;
   margin-bottom: 4px;
+  transition: color 0.3s ease;
 }
 
 .slider {
   width: 100%;
-  cursor: pointer;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    #4f46e5,
+    #8b5cf6
+  ); /* Gradient background */
+  border-radius: 8px;
+  outline: none;
+  transition: background 0.3s ease; /* Smooth transition for slider color */
+}
+
+.slider:hover {
+  background: linear-gradient(
+    to right,
+    #6366f1,
+    #a78bfa
+  ); /* Lighter gradient when hovered */
 }
 
 .slider-value {

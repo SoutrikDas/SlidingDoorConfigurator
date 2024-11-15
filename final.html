@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Model Configurator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="final.css" />
+    <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="iframe-container">
+        <iframe
+          src=""
+          id="api-frame"
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+          frameborder="0"
+        ></iframe>
+        <div class="slider-container">
+          <h3>Operation</h3>
+          <p>Slide to Open</p>
+          <input
+            node="98"
+            type="range"
+            id="primarySlider"
+            class="slider"
+            min="0"
+            max="0.75"
+            value="0"
+            step="0.05"
+          />
+        </div>
+      </div>
+      <div class="configurator">
+        <h3>Select Interior Color</h3>
+        <div class="color-options interior">
+          <div class="color-option">
+            <button
+              class="interior-color tile"
+              data-color="black"
+              style="background-color: #16151c"
+            ></button>
+            <span class="color-text">Black</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="interior-color tile"
+              data-color="brown"
+              style="background-color: #514431"
+            ></button>
+            <span class="color-text">Brown</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="interior-color tile"
+              data-color="white"
+              style="background-color: #f3f4f5"
+            ></button>
+            <span class="color-text">White</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="interior-color tile"
+              data-color="tan"
+              style="background-color: #c8baa5"
+            ></button>
+            <span class="color-text">Tan</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="interior-color tile"
+              data-color="morning-sky-gray"
+              style="background-color: #cecfd0"
+            ></button>
+            <span class="color-text">Morning Sky Gray</span>
+          </div>
+        </div>
+
+        <h3>Select Exterior Color</h3>
+        <div class="color-options exterior">
+          <button
+            class="exterior-color"
+            data-color="black"
+            style="background-color: #16151c"
+          >
+            <span>Black</span>
+          </button>
+          <button
+            class="exterior-color"
+            data-color="brown"
+            style="background-color: #514431"
+          >
+            <span>Brown</span>
+          </button>
+          <button
+            class="exterior-color"
+            data-color="white"
+            style="background-color: #f3f4f5"
+          >
+            <span>White</span>
+          </button>
+          <button
+            class="exterior-color"
+            data-color="tan"
+            style="background-color: #c8baa5"
+          >
+            <span>Tan</span>
+          </button>
+          <button
+            class="exterior-color"
+            data-color="morning-sky-gray"
+            style="background-color: #cecfd0"
+          >
+            <span>Morning Sky Gray</span>
+          </button>
+        </div>
+
+        <h3>Select Hardware Color</h3>
+        <div class="color-options hardware">
+          <button
+            class="hardware-color"
+            data-color="satin-nickel"
+            style="background-color: rgb(187, 177, 165)"
+          >
+            <span>Satin Nickel</span>
+          </button>
+          <button
+            class="hardware-color"
+            data-color="white"
+            style="background-color: rgb(238, 235, 236)"
+          >
+            <span>White</span>
+          </button>
+          <button
+            class="hardware-color"
+            data-color="matte-black"
+            style="background-color: black"
+          >
+            <span>Matte Black</span>
+          </button>
+          <button
+            class="hardware-color"
+            data-color="tan"
+            style="background-color: #c8baa5"
+          >
+            <span>Tan</span>
+          </button>
+          <button
+            class="hardware-color"
+            data-color="morning-sky-gray"
+            style="background-color: #cecfd0"
+          >
+            <span>Morning Sky Gray</span>
+          </button>
+        </div>
+
+        <h3>Select Grille Pattern</h3>
+        <div class="grille-patterns">
+          <button
+            class="grille-pattern"
+            data-pattern="no-grilles"
+            style="background-image: url('./colors/No Grilles.png')"
+          >
+            <span>No Grilles</span>
+          </button>
+          <button
+            class="grille-pattern"
+            data-pattern="traditional"
+            style="background-image: url('./colors/Traditional Grilles.png')"
+          >
+            <span>Traditional</span>
+          </button>
+          <button
+            class="grille-pattern"
+            data-pattern="top-row"
+            style="background-image: url('./colors/Top Row Grilles.png')"
+          >
+            <span>Top Row</span>
+          </button>
+          <button
+            class="grille-pattern"
+            data-pattern="prairie"
+            style="background-image: url('./colors/Prairie Grilles.png')"
+          >
+            <span>Prairie</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

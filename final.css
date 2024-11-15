@@ -1,0 +1,266 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  height: 80vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+h3 {
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.color-options {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-items: center; /* Center the items horizontally */
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  border: none;
+  width: 100%; /* Ensure button takes full width within the grid item */
+  height: 100%;
+}
+
+button span {
+  margin-top: 5px;
+  font-size: 0.9em;
+  text-align: center;
+  word-wrap: break-word; /* Ensure text wraps properly */
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.exterior {
+  display: none;
+}
+
+/* Grille patterns styles */
+.grille-patterns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  justify-items: center; /* Center the items horizontally */
+}
+
+.grille-pattern {
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+  width: 100%; /* Ensure grille pattern item takes up full grid item width */
+  height: 100%;
+}
+
+.grille-pattern span {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.grille-pattern:hover {
+  transform: scale(1.05);
+}
+
+.iframe-container {
+  flex: 7;
+  display: flex;
+  min-height: 100%; /* Ensure container fills height */
+  height: 100%; /* Set explicit height */
+  width: 100%;
+  position: relative;
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%; /* Makes iframe expand to container height */
+  min-height: 50vh; /* Ensures at least 50% of the viewport height */
+
+  border: none;
+}
+
+.configurator {
+  flex: 3;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.configurator h2 {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.configurator label {
+  margin-top: 5px;
+}
+
+.configurator select,
+.configurator input {
+  padding: 5px;
+  font-size: 1em;
+}
+
+.slider-container {
+  position: absolute;
+  bottom: 10px; /* Adjust this for the space from the bottom */
+  left: 50%;
+  transform: translateX(-50%); /* Center the slider container horizontally */
+  text-align: center;
+  width: 50%;
+  z-index: 10; /* Ensures the slider is above the iframe */
+}
+
+/* Heading and paragraph inside the slider container */
+.slider-container h3,
+.slider-container p {
+  margin: 0.5rem 0;
+}
+
+/* Slider styling */
+.slider {
+  -webkit-appearance: none;
+  width: 80%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: lightgreen;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background-color: green;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: lightgreen;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.tile {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    min-height: 80vh;
+    margin: 5px;
+    height: auto;
+  }
+
+  .iframe-container {
+    width: 100%;
+    min-height: 50vh; /* Ensures 50% viewport height on small screens */
+    height: auto; /* Allows content to expand as needed */
+  }
+
+  .iframe-container iframe {
+    min-height: 50vh;
+    min-width: 90vw;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .configurator {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Color options on mobile - 3 items per row */
+  .color-options {
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row on mobile */
+  }
+
+  .color-options button {
+    width: 100%; /* Ensure buttons fill the available space */
+    height: auto; /* Allow buttons to resize according to their content */
+  }
+
+  /* Grille patterns on mobile - 2 items per row */
+  .grille-patterns {
+    grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
+  }
+
+  .grille-pattern {
+    width: 100%;
+    height: auto;
+  }
+
+  .exterior {
+    display: grid;
+  }
+
+  /* Ensure the buttons remain square on mobile */
+  .color-options button,
+  .grille-pattern {
+    aspect-ratio: 1; /* Maintain square aspect ratio */
+  }
+
+  .grille-pattern span {
+    font-size: 0.9em;
+  }
+}
