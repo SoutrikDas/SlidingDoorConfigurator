@@ -43,7 +43,9 @@
               class="interior-color tile"
               data-color="black"
               style="background-color: #16151c"
-            ></button>
+            >
+              <!-- <img src="colors/black.png" alt="" /> -->
+            </button>
             <span class="color-text">Black</span>
           </div>
 
@@ -52,7 +54,9 @@
               class="interior-color tile"
               data-color="brown"
               style="background-color: #514431"
-            ></button>
+            >
+              <!-- <img src="colors/Brown.png" alt="" /> -->
+            </button>
             <span class="color-text">Brown</span>
           </div>
 
@@ -83,118 +87,147 @@
             <span class="color-text">Morning Sky Gray</span>
           </div>
         </div>
-
         <h3>Select Exterior Color</h3>
         <div class="color-options exterior">
-          <button
-            class="exterior-color"
-            data-color="black"
-            style="background-color: #16151c"
-          >
-            <span>Black</span>
-          </button>
-          <button
-            class="exterior-color"
-            data-color="brown"
-            style="background-color: #514431"
-          >
-            <span>Brown</span>
-          </button>
-          <button
-            class="exterior-color"
-            data-color="white"
-            style="background-color: #f3f4f5"
-          >
-            <span>White</span>
-          </button>
-          <button
-            class="exterior-color"
-            data-color="tan"
-            style="background-color: #c8baa5"
-          >
-            <span>Tan</span>
-          </button>
-          <button
-            class="exterior-color"
-            data-color="morning-sky-gray"
-            style="background-color: #cecfd0"
-          >
-            <span>Morning Sky Gray</span>
-          </button>
+          <div class="color-option">
+            <button
+              class="exterior-color tile"
+              data-color="black"
+              style="background-color: #16151c"
+            ></button>
+            <span class="color-text">Black</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="exterior-color tile"
+              data-color="brown"
+              style="background-color: #514431"
+            ></button>
+            <span class="color-text">Brown</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="exterior-color tile"
+              data-color="white"
+              style="background-color: #f3f4f5"
+            ></button>
+            <span class="color-text">White</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="exterior-color tile"
+              data-color="tan"
+              style="background-color: #c8baa5"
+            ></button>
+            <span class="color-text">Tan</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="exterior-color tile"
+              data-color="morning-sky-gray"
+              style="background-color: #cecfd0"
+            ></button>
+            <span class="color-text">Morning Sky Gray</span>
+          </div>
         </div>
 
         <h3>Select Hardware Color</h3>
         <div class="color-options hardware">
-          <button
-            class="hardware-color"
-            data-color="satin-nickel"
-            style="background-color: rgb(187, 177, 165)"
-          >
-            <span>Satin Nickel</span>
-          </button>
-          <button
-            class="hardware-color"
-            data-color="white"
-            style="background-color: rgb(238, 235, 236)"
-          >
-            <span>White</span>
-          </button>
-          <button
-            class="hardware-color"
-            data-color="matte-black"
-            style="background-color: black"
-          >
-            <span>Matte Black</span>
-          </button>
-          <button
-            class="hardware-color"
-            data-color="tan"
-            style="background-color: #c8baa5"
-          >
-            <span>Tan</span>
-          </button>
-          <button
-            class="hardware-color"
-            data-color="morning-sky-gray"
-            style="background-color: #cecfd0"
-          >
-            <span>Morning Sky Gray</span>
-          </button>
-        </div>
+          <div class="color-option">
+            <button
+              class="hardware-color tile"
+              data-color="satin-nickel"
+              hex="#74726d"
+              metalness="0.9"
+              glossiness="0.8"
+              roughness="0.1"
+              specular="0.7"
+              style="background-color: #74726d"
+            ></button>
+            <span class="color-text">Satin Nickel</span>
+          </div>
 
-        <h3>Select Grille Pattern</h3>
-        <div class="grille-patterns">
-          <button
-            class="grille-pattern"
-            data-pattern="no-grilles"
-            style="background-image: url('./colors/No Grilles.png')"
-          >
+          <div class="color-option">
+            <button
+              class="hardware-color tile"
+              data-color="white"
+              hex="#f0eeef"
+              metalness="0.2"
+              glossiness="0.5"
+              roughness="0.6"
+              specular="0.4"
+              style="background-color: #f0eeef"
+            ></button>
+            <span class="color-text">White</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="hardware-color tile"
+              data-color="matte-black"
+              hex="#212121"
+              metalness="0.0"
+              glossiness="0.1"
+              roughness="0.9"
+              specular="0.05"
+              style="background-color: #212121"
+            ></button>
+            <span class="color-text">Matte Black</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="hardware-color tile"
+              data-color="tan"
+              hex="#beae94"
+              metalness="0.1"
+              glossiness="0.6"
+              roughness="0.3"
+              specular="0.5"
+              style="background-color: #beae94"
+            ></button>
+            <span class="color-text">Tan</span>
+          </div>
+
+          <div class="color-option">
+            <button
+              class="hardware-color tile"
+              data-color="morning-sky-gray"
+              hex="#bebebb"
+              metalness="0.3"
+              glossiness="0.4"
+              roughness="0.5"
+              specular="0.6"
+              style="background-color: #bebebb"
+            ></button>
+            <span class="color-text">Morning Sky Gray</span>
+          </div>
+        </div>
+        <div class="grille-pattern-menu">
+          <h3>Select Grille Pattern</h3>
+          <div class="grille-option" data-pattern="no-grilles">
+            <img src="colors/No Grilles.png" alt="No Grilles" />
             <span>No Grilles</span>
-          </button>
-          <button
-            class="grille-pattern"
-            data-pattern="traditional"
-            style="background-image: url('./colors/Traditional Grilles.png')"
-          >
+          </div>
+          <div class="grille-option" data-pattern="traditional">
+            <img src="colors/Traditional Grilles.png" alt="Traditional" />
             <span>Traditional</span>
-          </button>
-          <button
-            class="grille-pattern"
-            data-pattern="top-row"
-            style="background-image: url('./colors/Top Row Grilles.png')"
-          >
+          </div>
+          <div class="grille-option" data-pattern="topRow">
+            <img src="colors/Top Row Grilles.png" alt="Top Row" />
             <span>Top Row</span>
-          </button>
-          <button
-            class="grille-pattern"
-            data-pattern="prairie"
-            style="background-image: url('./colors/Prairie Grilles.png')"
-          >
+          </div>
+          <div class="grille-option" data-pattern="prairie">
+            <img src="colors/Prairie Grilles.png" alt="Prairie" />
             <span>Prairie</span>
-          </button>
+          </div>
         </div>
       </div>
     </div>
-    <script src="main.js"></script>
+    <script src="main.js" `></script>
   </body>
 </html>

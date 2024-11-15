@@ -24,6 +24,7 @@ const interiorColors = {
 
 function hexToRgbArray(hex) {
   // Remove "#" if present
+  console.log(`hextoRGBArray input : ${hex}`);
   hex = hex.replace(/^#/, "");
 
   // Check for valid 6-character hex color
@@ -200,6 +201,9 @@ function showGrillType(grillType) {
         });
       });
       break;
+    case "none":
+      // hideAllGrills();
+      console.log("Hidden all grils");
   }
 }
 
@@ -261,13 +265,16 @@ document.querySelectorAll(".interior-color").forEach((element) => {
 });
 
 function interiorColorSelectHandler(event) {
+  console.log(`Button pressed : ${event.target}`);
   const selectedColor = event.target.getAttribute("data-color");
   console.log(`Selected color : ${selectedColor}`);
 
   interiorColor = selectedColor;
   setColor("Interior", interiorColors[interiorColor]);
   if (interiorColor === "white") {
-    showAllExteriorColors();
+    // showAllExteriorColors();
+    console.log("No need to disable any Exterior colors");
+    updateExteriorColorOptions(interiorColor);
   } else {
     // Otherwise, show only the exterior colors that match the interior color
     updateExteriorColorOptions(interiorColor);
@@ -286,22 +293,48 @@ document.querySelectorAll(".exterior-color").forEach((element) => {
   element.addEventListener("click", exteriorColorSelectHandler);
 });
 
+// function updateExteriorColorOptions(selectedInteriorColor) {
+//   const exteriorColorCircles = document.querySelectorAll(".exterior-color");
+
+//   exteriorColorCircles.forEach((circle) => {
+//     const exteriorColor = circle.getAttribute("data-color");
+
+//     // If the interior color is not white, match the exterior colors to the selected interior color
+//     if (selectedInteriorColor === exteriorColor) {
+//       console.log(
+//         `for interior : ${selectedInteriorColor} and exterior: ${exteriorColor} decision is same`
+//       );
+//       // Show the matching exterior color
+//       circle.style.display = "inline-block";
+//     } else {
+//       // Hide the non-matching exterior colors
+//       circle.style.display = "none";
+//     }
+//   });
+// }
+
 function updateExteriorColorOptions(selectedInteriorColor) {
   const exteriorColorCircles = document.querySelectorAll(".exterior-color");
 
   exteriorColorCircles.forEach((circle) => {
     const exteriorColor = circle.getAttribute("data-color");
 
-    // If the interior color is not white, match the exterior colors to the selected interior color
-    if (selectedInteriorColor === exteriorColor) {
+    if (
+      selectedInteriorColor == "white" ||
+      selectedInteriorColor === exteriorColor
+    ) {
       console.log(
-        `for interior : ${selectedInteriorColor} and exterior: ${exteriorColor} decision is same`
+        `For interior: ${selectedInteriorColor} and exterior: ${exteriorColor}, the decision is the same`
       );
-      // Show the matching exterior color
-      circle.style.display = "inline-block";
+      // Enable the matching exterior color
+      circle.style.opacity = "1";
+      circle.style.pointerEvents = "auto";
+      circle.style.filter = "none"; // Reset any disabled styles
     } else {
-      // Hide the non-matching exterior colors
-      circle.style.display = "none";
+      // Disable the non-matching exterior colors
+      circle.style.opacity = "0.5"; // Visual indication of being disabled
+      circle.style.pointerEvents = "none"; // Makes it unclickable
+      circle.style.filter = "grayscale(100%)"; // Optional visual cue
     }
   });
 }
@@ -377,30 +410,45 @@ function logAllMaterials(api) {
 // }
 
 // Function to handle color selection and apply material customization
-document.querySelectorAll(".lock-button").forEach((button) => {
+document.querySelectorAll(".lock-button, .hardware-color").forEach((button) => {
   button.addEventListener("click", (event) => {
     const selectedColor = event.target.getAttribute("data-color");
-    console.log(`Selected Color: ${selectedColor}`);
+    const hex = event.target.getAttribute("hex");
 
-    // Call the corresponding function for each color
-    switch (selectedColor) {
-      case "bright-brass":
-        applyBrightBrassColor();
-        break;
-      case "morning-sky-gray":
-        applyMorningSkyGrayColor();
-        break;
-      case "oil-rubbed-bronze":
-        applyOilRubbedBronzeColor();
-        break;
-      case "satin-nickel":
-        applySatinNickelColor();
-        break;
-      case "white":
-        applyWhiteColor();
-        break;
-      default:
-        console.log("Unknown color selected");
+    if (hex) {
+      // If the element has a hex attribute, create a customColor object
+      const customColor = {
+        hex: hex,
+        name: selectedColor,
+        metalness: parseFloat(event.target.getAttribute("metalness")) || 0,
+        glossiness: parseFloat(event.target.getAttribute("glossiness")) || 0,
+        roughness: parseFloat(event.target.getAttribute("roughness")) || 0,
+        specular: parseFloat(event.target.getAttribute("specular")) || 0,
+      };
+
+      // Pass the customColor object to applyGeneralColor
+      applyGeneralColor(customColor);
+    } else {
+      // Fallback to the original switch-case logic for buttons without a hex attribute
+      switch (selectedColor) {
+        case "bright-brass":
+          applyBrightBrassColor();
+          break;
+        case "morning-sky-gray":
+          applyMorningSkyGrayColor();
+          break;
+        case "oil-rubbed-bronze":
+          applyOilRubbedBronzeColor();
+          break;
+        case "satin-nickel":
+          applySatinNickelColor();
+          break;
+        case "white":
+          applyWhiteColor();
+          break;
+        default:
+          console.log("Unknown color selected");
+      }
     }
   });
 });
@@ -548,6 +596,43 @@ function applyOilRubbedBronzeColor() {
 }
 
 // Function for "Satin Nickel" color
+function applyGeneralColor(customColor) {
+  console.log(`custom color in apply general ${customColor}`);
+  var materialToChange;
+  for (var i = 0; i < myMaterials.length; i++) {
+    var m = myMaterials[i];
+    if (m.name === "HandleMaterial") {
+      materialToChange = m;
+      console.log(`Material to Change has been found: ${m.name}`);
+      break;
+    }
+  }
+  let rgb = hexToRgbArray(customColor.hex);
+  if (materialToChange) {
+    materialToChange.channels.AlbedoPBR.factor = 1;
+    materialToChange.channels.AlbedoPBR.enable = true;
+    materialToChange.channels.AlbedoPBR.color = rgb;
+
+    if (customColor?.glossiness !== undefined) {
+      materialToChange.channels.GlossinessPBR.factor = customColor.glossiness;
+    }
+    if (customColor?.metalness !== undefined) {
+      materialToChange.channels.MetalnessPBR.factor = customColor.metalness;
+    }
+    if (customColor?.roughness !== undefined) {
+      materialToChange.channels.RoughnessPBR.factor = customColor.roughness;
+    }
+    if (customColor?.specular !== undefined) {
+      materialToChange.channels.SpecularPBR.factor = customColor.specular;
+    }
+
+    api.setMaterial(materialToChange, function () {
+      console.log(`${customColor.name} material updated successfully`);
+    });
+  } else {
+    console.log("HandleMaterial not found");
+  }
+}
 function applySatinNickelColor() {
   console.log("Applying Satin Nickel Customization");
 
@@ -618,3 +703,14 @@ function applyWhiteColor() {
     console.log("HandleMaterial not found");
   }
 }
+
+document.querySelectorAll(".grille-option").forEach((button) => {
+  button.addEventListener("click", () => {
+    // Get the value of the data-pattern attribute
+    const pattern = button.getAttribute("data-pattern");
+    showGrillType(pattern);
+
+    // Log it out
+    console.log(`Selected grille pattern: ${pattern}`);
+  });
+});
