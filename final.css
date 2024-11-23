@@ -391,8 +391,8 @@ h3 {
 /* First Row: Heading */
 .heading {
   text-align: center;
-  padding: 1rem;
-  font-size: 1.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
   font-weight: bold;
   border-bottom: 1px solid #ddd;
 }
@@ -470,6 +470,14 @@ h3 {
 }
 
 .scrollable-options {
-  overflow-x: auto;
-  flex-wrap: nowrap;
+  overflow-x: auto !important;
+  flex-wrap: nowrap !important;
+}
+.scrollable-options-grill {
+  display: block; /* block-level container */
+  overflow-x: auto; /* Allow horizontal scrolling */
+  white-space: nowrap; /* Prevent items from wrapping */
+  -webkit-overflow-scrolling: touch;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
