@@ -130,7 +130,7 @@ h3 {
 
 .color-options {
   display: flex;
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  flex-wrap: wrap;
   justify-content: start; /* Center items */
   gap: 10px;
   margin: 0px 0;
@@ -345,6 +345,12 @@ h3 {
 .phone-only {
   display: none;
 }
+.phone-only .color-options.interior {
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
 
 @media (max-width: 768px) {
   .phone-only {
@@ -458,7 +464,12 @@ h3 {
   padding-top: 1rem;
   margin: 10px !important;
   margin-top: 20px;
-  flex-grow: 1; /* Allows this element to take up remaining space */
+  /* flex-grow: 1; Allows this element to take up remaining space */
   flex-shrink: 0; /* Prevents the element from shrinking if the space is tight */
   flex-basis: 0; /* Ensures the element starts with zero width before growing */
+}
+
+.scrollable-options {
+  overflow-x: auto;
+  flex-wrap: nowrap;
 }
