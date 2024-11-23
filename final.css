@@ -150,16 +150,89 @@ h3 {
   transition: transform 0.2s, border-color 0.2s;
 }
 
+.interior-color.selected {
+  border: 2px solid #4caf50;
+  transform: scale(1.1); /* Slightly enlarge the selected color button */
+}
+.interior-color.selected::before {
+  content: "↓"; /* Downward arrow */
+  color: #4caf50; /* Green color for the arrow */
+  font-size: 18px; /* Adjust size of the arrow */
+  position: absolute;
+  top: -25px; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .exterior-color {
   border: 0px solid #ccc; /* Optional border for better visibility */
   cursor: pointer;
   transition: transform 0.2s, border-color 0.2s;
+}
+.exterior-color.selected {
+  border: 2px solid #4caf50;
+  transform: scale(1.1); /* Slightly enlarge the selected color button */
+}
+.exterior-color.selected::before {
+  content: "↓"; /* Downward arrow */
+  color: #4caf50; /* Green color for the arrow */
+  font-size: 18px; /* Adjust size of the arrow */
+  position: absolute;
+  top: -25px; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
+}
+.blocked-overlay {
+  position: relative; /* Set relative positioning to allow pseudo-elements to overlay */
+  display: inline-block; /* Ensure it works for inline elements too */
+  pointer-events: none;
+}
+
+.blocked-overlay::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 0, 0, 0.1); /* Optional red overlay */
+  pointer-events: none; /* Prevent overlay from interfering with clicks */
+  border-radius: 50%; /* Make it a circle */
+  border: 2px solid red !important;
+  z-index: 11; /* Red circle */
+}
+
+.blocked-overlay::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%; /* Slightly smaller than the circle */
+  height: 2px; /* Thickness of the diagonal line */
+  background-color: red; /* Red diagonal line */
+  transform: translate(-50%, -50%) rotate(45deg); /* Diagonal cross line */
+  pointer-events: none; /* Ensure it’s unclickable */
 }
 
 .hardware-color {
   border: 0px solid #ccc; /* Optional border for better visibility */
   cursor: pointer;
   transition: transform 0.2s, border-color 0.2s;
+}
+
+.hardware-color.selected {
+  border: 2px solid #4caf50;
+  transform: scale(1.1); /* Slightly enlarge the selected color button */
+}
+.hardware-color.selected::before {
+  content: "↓"; /* Downward arrow */
+  color: #4caf50; /* Green color for the arrow */
+  font-size: 18px; /* Adjust size of the arrow */
+  position: absolute;
+  top: -25px; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .tile {
@@ -193,8 +266,7 @@ h3 {
 
   .iframe-container {
     width: 100%;
-    min-height: 50vh; /* Ensures 50% viewport height on small screens */
-    /* height: auto; Allows content to expand as needed */
+    min-height: 60vh;
   }
 
   .iframe-container iframe {
@@ -208,7 +280,7 @@ h3 {
   .configurator {
     width: 100%;
     margin: 0;
-    max-height: 50vh;
+    max-height: 40vh;
     overflow: scroll;
   }
 
@@ -226,6 +298,19 @@ h3 {
   margin: 0 10px;
   cursor: pointer;
   text-align: center;
+}
+.grille-option.selected img {
+  border: 2px solid #4caf50 !important;
+  transform: scale(1.1); /* Slightly enlarge the selected color button */
+}
+.grille-option.selected::before {
+  content: "↓"; /* Downward arrow */
+  color: #4caf50; /* Green color for the arrow */
+  font-size: 18px; /* Adjust size of the arrow */
+  position: absolute;
+  top: -25px; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .grille-option img {
@@ -245,4 +330,135 @@ h3 {
   font-size: 14px;
   margin-top: 5px;
   /* font-weight: bold; */
+}
+
+.non-phone {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .non-phone {
+    display: none;
+  }
+}
+
+.phone-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .phone-only {
+    display: block;
+  }
+}
+@media (min-width: 769px) {
+  .phone-only {
+    display: none !important;
+  }
+}
+
+/* Basic Styling for the Container */
+/* 
+.configuratormobile {
+  display: flex;
+  flex-direction: column;
+
+  font-family: Arial, sans-serif;
+  width: 100%;
+  height: 40vh; 
+} 
+*/
+
+.phone-only .page1,
+.phone-only .page2,
+.phone-only .page3,
+.phone-only .page4 {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff; /* White background for the pages */
+  border-radius: 8px; /* Rounded corners for the pages */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow to make the pages stand out */
+}
+
+/* First Row: Heading */
+.heading {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Second Row: Options */
+.options {
+  flex: 1; /* Takes up all remaining space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Third Row: Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  position: sticky; /* Stays at the bottom of the container */
+  bottom: 0;
+}
+
+/* Individual Navigation Items */
+.nav-item {
+  flex: 1;
+  display: flex; /* Enable flexbox for centering */
+  flex-direction: column; /* Stack the symbol and text vertically */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold; /* Make both symbol and text bold */
+}
+
+/* Left Navigation */
+.nav-item.left {
+  text-align: left;
+}
+
+/* Right Navigation */
+.nav-item.right {
+  text-align: right;
+}
+
+/* Arrows */
+.nav-item .arrow {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Text below Arrows */
+.nav-item .text {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* Borders between Navigation Items */
+.nav-item:not(:last-child) {
+  border-right: 1px solid #ddd;
+}
+
+.phone-only .color-options {
+  padding-top: 1rem;
+  margin: 10px !important;
+  margin-top: 20px;
+  flex-grow: 1; /* Allows this element to take up remaining space */
+  flex-shrink: 0; /* Prevents the element from shrinking if the space is tight */
+  flex-basis: 0; /* Ensures the element starts with zero width before growing */
 }

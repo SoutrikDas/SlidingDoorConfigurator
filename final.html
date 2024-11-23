@@ -35,7 +35,7 @@
           />
         </div>
       </div>
-      <div class="configurator">
+      <div class="configurator non-phone">
         <h3>Select Interior Color</h3>
         <div class="color-options interior">
           <div class="color-option">
@@ -135,7 +135,7 @@
           </div>
         </div>
 
-        <h3>Select Hardware Color</h3>
+        <h3>Select Hardware Colors</h3>
         <div class="color-options hardware">
           <div class="color-option">
             <button
@@ -209,21 +209,304 @@
         </div>
         <div class="grille-pattern-menu">
           <h3>Select Grille Pattern</h3>
-          <div class="grille-option" data-pattern="no-grilles">
-            <img src="colors/No Grilles.png" alt="No Grilles" />
-            <span>No Grilles</span>
+          <div class="grille-options">
+            <div class="grille-option" data-pattern="no-grilles">
+              <img src="colors/No Grilles.png" alt="No Grilles" />
+              <span>No Grilles</span>
+            </div>
+            <div class="grille-option" data-pattern="traditional">
+              <img src="colors/Traditional Grilles.png" alt="Traditional" />
+              <span>Traditional</span>
+            </div>
+            <div class="grille-option" data-pattern="topRow">
+              <img src="colors/Top Row Grilles.png" alt="Top Row" />
+              <span>Top Row</span>
+            </div>
+            <div class="grille-option" data-pattern="prairie">
+              <img src="colors/Prairie Grilles.png" alt="Prairie" />
+              <span>Prairie</span>
+            </div>
           </div>
-          <div class="grille-option" data-pattern="traditional">
-            <img src="colors/Traditional Grilles.png" alt="Traditional" />
-            <span>Traditional</span>
+        </div>
+      </div>
+      <div class="configuratormobile phone-only">
+        <!-- Page 1: Interior Color -->
+        <div class="page1">
+          <div class="heading">
+            <h3>Interior Color</h3>
           </div>
-          <div class="grille-option" data-pattern="topRow">
-            <img src="colors/Top Row Grilles.png" alt="Top Row" />
-            <span>Top Row</span>
+          <div class="color-options interior">
+            <div class="color-option">
+              <button
+                class="interior-color tile"
+                data-color="black"
+                style="background-color: #16151c"
+              >
+                <!-- <img src="colors/black.png" alt="" /> -->
+              </button>
+              <span class="color-text">Black</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="interior-color tile"
+                data-color="brown"
+                style="background-color: #514431"
+              >
+                <!-- <img src="colors/Brown.png" alt="" /> -->
+              </button>
+              <span class="color-text">Brown</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="interior-color tile"
+                data-color="white"
+                style="background-color: #f3f4f5"
+              ></button>
+              <span class="color-text">White</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="interior-color tile"
+                data-color="tan"
+                style="background-color: #c8baa5"
+              ></button>
+              <span class="color-text">Tan</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="interior-color tile"
+                data-color="morning-sky-gray"
+                style="background-color: #cecfd0"
+              ></button>
+              <span class="color-text">Morning Sky Gray</span>
+            </div>
           </div>
-          <div class="grille-option" data-pattern="prairie">
-            <img src="colors/Prairie Grilles.png" alt="Prairie" />
-            <span>Prairie</span>
+          <div class="navigation">
+            <div class="nav-item left">
+              <div class="arrow">&lt;</div>
+
+              <div class="text">Grill Patterns</div>
+            </div>
+            <div class="nav-item center">
+              <div class="cross">×</div>
+              <div class="text">Reset</div>
+            </div>
+            <div class="nav-item right">
+              <div class="arrow">&gt;</div>
+              <!-- Greater than symbol -->
+              <div class="text">Exterior Color</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page 2: Exterior Color -->
+        <div class="page2">
+          <div class="heading">
+            <h3>Exterior Color</h3>
+          </div>
+          <div class="color-options exterior">
+            <div class="color-option">
+              <button
+                class="exterior-color tile"
+                data-color="black"
+                style="background-color: #16151c"
+              ></button>
+              <span class="color-text">Black</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="exterior-color tile"
+                data-color="brown"
+                style="background-color: #514431"
+              ></button>
+              <span class="color-text">Brown</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="exterior-color tile"
+                data-color="white"
+                style="background-color: #f3f4f5"
+              ></button>
+              <span class="color-text">White</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="exterior-color tile"
+                data-color="tan"
+                style="background-color: #c8baa5"
+              ></button>
+              <span class="color-text">Tan</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="exterior-color tile"
+                data-color="morning-sky-gray"
+                style="background-color: #cecfd0"
+              ></button>
+              <span class="color-text">Morning Sky Gray</span>
+            </div>
+          </div>
+          <div class="navigation">
+            <div class="nav-item left">
+              <div class="arrow">&lt;</div>
+              <!-- Less than symbol -->
+              <div class="text">Interior Color</div>
+            </div>
+            <div class="nav-item center">
+              <div class="cross">×</div>
+              <div class="text">Reset</div>
+            </div>
+            <div class="nav-item right">
+              <div class="arrow">&gt;</div>
+              <!-- Greater than symbol -->
+              <div class="text">Hardware Color</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page 3: Hardware Color -->
+        <div class="page3">
+          <div class="heading">
+            <h3>Hardware Color</h3>
+          </div>
+          <div class="color-options hardware">
+            <div class="color-option">
+              <button
+                class="hardware-color tile"
+                data-color="satin-nickel"
+                hex="#74726d"
+                metalness="0.9"
+                glossiness="0.8"
+                roughness="0.1"
+                specular="0.7"
+                style="background-color: #74726d"
+              ></button>
+              <span class="color-text">Satin Nickel</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="hardware-color tile"
+                data-color="white"
+                hex="#f0eeef"
+                metalness="0.2"
+                glossiness="0.5"
+                roughness="0.6"
+                specular="0.4"
+                style="background-color: #f0eeef"
+              ></button>
+              <span class="color-text">White</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="hardware-color tile"
+                data-color="matte-black"
+                hex="#212121"
+                metalness="0.0"
+                glossiness="0.1"
+                roughness="0.9"
+                specular="0.05"
+                style="background-color: #212121"
+              ></button>
+              <span class="color-text">Matte Black</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="hardware-color tile"
+                data-color="tan"
+                hex="#beae94"
+                metalness="0.1"
+                glossiness="0.6"
+                roughness="0.3"
+                specular="0.5"
+                style="background-color: #beae94"
+              ></button>
+              <span class="color-text">Tan</span>
+            </div>
+
+            <div class="color-option">
+              <button
+                class="hardware-color tile"
+                data-color="morning-sky-gray"
+                hex="#bebebb"
+                metalness="0.3"
+                glossiness="0.4"
+                roughness="0.5"
+                specular="0.6"
+                style="background-color: #bebebb"
+              ></button>
+              <span class="color-text">Morning Sky Gray</span>
+            </div>
+          </div>
+          <div class="navigation">
+            <div class="nav-item left">
+              <div class="arrow">&lt;</div>
+              <!-- Less than symbol -->
+              <div class="text">Exterior Color</div>
+            </div>
+            <div class="nav-item center">
+              <div class="cross">×</div>
+              <div class="text">Reset</div>
+            </div>
+            <div class="nav-item right">
+              <div class="arrow">&gt;</div>
+              <!-- Greater than symbol -->
+              <div class="text">Grille Pattern</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page 4: Grille Pattern -->
+        <div class="page4">
+          <div class="heading">
+            <h3>Grill Pattern</h3>
+          </div>
+          <div class="grille-options">
+            <div class="grille-option" data-pattern="no-grilles">
+              <img src="colors/No Grilles.png" alt="No Grilles" />
+              <span>No Grilles</span>
+            </div>
+            <div class="grille-option" data-pattern="traditional">
+              <img src="colors/Traditional Grilles.png" alt="Traditional" />
+              <span>Traditional</span>
+            </div>
+            <div class="grille-option" data-pattern="topRow">
+              <img src="colors/Top Row Grilles.png" alt="Top Row" />
+              <span>Top Row</span>
+            </div>
+            <div class="grille-option" data-pattern="prairie">
+              <img src="colors/Prairie Grilles.png" alt="Prairie" />
+              <span>Prairie</span>
+            </div>
+          </div>
+          <div class="navigation">
+            <div class="nav-item left">
+              <div class="arrow">&lt;</div>
+              <!-- Less than symbol -->
+              <div class="text">Hardware Color</div>
+            </div>
+            <div class="nav-item center">
+              <div class="cross">×</div>
+              <div class="text">Reset</div>
+            </div>
+            <div class="nav-item right">
+              <div class="arrow">&gt;</div>
+              <!-- Greater than symbol -->
+              <div class="text">
+                <div class="text">Interior Color</div>
+              </div>
+              <!-- No next page in this case -->
+            </div>
           </div>
         </div>
       </div>

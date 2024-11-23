@@ -13,7 +13,53 @@ let interiorColor = "white";
 let exteriorColor = "black";
 let handleColor = undefined;
 let myMaterials = [];
+// Function to show the correct page and hide others
+function navigateTo(page) {
+  // Hide all pages
+  const pages = document.querySelectorAll(".page1, .page2, .page3, .page4");
+  pages.forEach((p) => (p.style.display = "none"));
 
+  // Show the selected page
+  document.querySelector(`.${page}`).style.display = "block";
+}
+
+// Set initial page to show (e.g., page1)
+navigateTo("page1");
+
+document
+  .querySelector(".page1 .nav-item.left")
+  .addEventListener("click", () => navigateTo("page4")); // Going left from page1 to page4
+
+document
+  .querySelector(".page1 .nav-item.right")
+  .addEventListener("click", () => navigateTo("page2")); // Going right from page1 to page2
+
+// Page 2: Exterior Color navigation
+document
+  .querySelector(".page2 .nav-item.left")
+  .addEventListener("click", () => navigateTo("page1")); // Going left from page2 to page1
+
+document
+  .querySelector(".page2 .nav-item.right")
+  .addEventListener("click", () => navigateTo("page3")); // Going right from page2 to page3
+
+// Page 3: Hardware Color navigation
+document
+  .querySelector(".page3 .nav-item.left")
+  .addEventListener("click", () => navigateTo("page2")); // Going left from page3 to page2
+
+document
+  .querySelector(".page3 .nav-item.right")
+  .addEventListener("click", () => navigateTo("page4")); // Going right from page3 to page4
+
+// Page 4: Grille Pattern navigation
+document
+  .querySelector(".page4 .nav-item.left")
+  .addEventListener("click", () => navigateTo("page3")); // Going left from page4 to page3
+
+document
+  .querySelector(".page4 .nav-item.right")
+  .addEventListener("click", () => navigateTo("page1")); // Going right from page4 to page1
 const interiorColors = {
   white: "#f3f4f5",
   black: "#16151c",
@@ -270,6 +316,14 @@ function interiorColorSelectHandler(event) {
   console.log(`Selected color : ${selectedColor}`);
 
   interiorColor = selectedColor;
+
+  // Remove the 'selected' class from all color buttons
+  document.querySelectorAll(".interior-color").forEach((button) => {
+    button.classList.remove("selected");
+  });
+
+  // Add the 'selected' class to the clicked color button
+  event.target.classList.add("selected");
   setColor("Interior", interiorColors[interiorColor]);
   if (interiorColor === "white") {
     // showAllExteriorColors();
@@ -314,35 +368,93 @@ document.querySelectorAll(".exterior-color").forEach((element) => {
 // }
 
 function updateExteriorColorOptions(selectedInteriorColor) {
+  document.querySelectorAll(".exterior-color").forEach((button) => {
+    button.classList.remove("blocked-overlay");
+  });
   const exteriorColorCircles = document.querySelectorAll(".exterior-color");
-
-  exteriorColorCircles.forEach((circle) => {
-    const exteriorColor = circle.getAttribute("data-color");
-
-    if (
-      selectedInteriorColor == "white" ||
-      selectedInteriorColor === exteriorColor
-    ) {
-      console.log(
-        `For interior: ${selectedInteriorColor} and exterior: ${exteriorColor}, the decision is the same`
-      );
-      // Enable the matching exterior color
+  if (selectedInteriorColor == "white") {
+    exteriorColorCircles.forEach((circle) => {
+      const exteriorColor = circle.getAttribute("data-color");
       circle.style.opacity = "1";
       circle.style.pointerEvents = "auto";
-      circle.style.filter = "none"; // Reset any disabled styles
-    } else {
-      // Disable the non-matching exterior colors
-      circle.style.opacity = "0.5"; // Visual indication of being disabled
-      circle.style.pointerEvents = "none"; // Makes it unclickable
-      circle.style.filter = "grayscale(100%)"; // Optional visual cue
-    }
-  });
+      circle.style.filter = "none";
+    });
+    document.querySelectorAll(".exterior-color").forEach((button) => {
+      button.classList.remove("selected");
+    });
+  } else {
+    exteriorColorCircles.forEach((circle) => {
+      const exteriorColor = circle.getAttribute("data-color");
+      if (selectedInteriorColor === exteriorColor) {
+        console.log(
+          `For interior: ${selectedInteriorColor} and exterior: ${exteriorColor}, the decision is the same`
+        );
+        // Enable the matching exterior color
+        document.querySelectorAll(".exterior-color").forEach((button) => {
+          button.classList.remove("selected");
+        });
+
+        // Add the 'selected' class to the clicked color button
+
+        document.querySelectorAll(".exterior-color").forEach((button) => {
+          console.log("Inside the query selector");
+          console.log(
+            `data-color attr= ${button.getAttribute(
+              "data-color"
+            )}  and selectedInternalColor = ${selectedInteriorColor}`
+          );
+          if (button.getAttribute("data-color") === selectedInteriorColor) {
+            button.classList.add("selected");
+          } else {
+            button.classList.add("blocked-overlay");
+          }
+        });
+
+        console.log("Current focus statement executed ? ");
+        circle.style.opacity = "1";
+        circle.style.pointerEvents = "auto";
+        circle.style.filter = "none"; // Reset any disabled styles
+      } else {
+        // Disable the non-matching exterior colors
+        // circle.style.opacity = "0.5"; // Visual indication of being disabled
+        circle.style.pointerEvents = "none"; // Makes it unclickable
+        // circle.style.filter = "grayscale(100%)"; // Optional visual cue
+        // circle.classList.add("blocked-overlay");
+      }
+    });
+  }
+  // exteriorColorCircles.forEach((circle) => {
+  //   const exteriorColor = circle.getAttribute("data-color");
+
+  //   if (
+  //     selectedInteriorColor == "white" ||
+  //     selectedInteriorColor === exteriorColor
+  //   ) {
+  //     console.log(
+  //       `For interior: ${selectedInteriorColor} and exterior: ${exteriorColor}, the decision is the same`
+  //     );
+  //     // Enable the matching exterior color
+  //     circle.style.opacity = "1";
+  //     circle.style.pointerEvents = "auto";
+  //     circle.style.filter = "none"; // Reset any disabled styles
+  //   } else {
+  //     // Disable the non-matching exterior colors
+  //     circle.style.opacity = "0.5"; // Visual indication of being disabled
+  //     circle.style.pointerEvents = "none"; // Makes it unclickable
+  //     circle.style.filter = "grayscale(100%)"; // Optional visual cue
+  //   }
+  // });
 }
 
 function exteriorColorSelectHandler(event) {
   const selectedColor = event.target.getAttribute("data-color");
   console.log(`Selected color : ${selectedColor}`);
+  document.querySelectorAll(".exterior-color").forEach((button) => {
+    button.classList.remove("selected");
+  });
 
+  // Add the 'selected' class to the clicked color button
+  event.target.classList.add("selected");
   exteriorColor = selectedColor;
   setColor("Exterior", interiorColors[exteriorColor]);
 }
@@ -414,7 +526,12 @@ document.querySelectorAll(".lock-button, .hardware-color").forEach((button) => {
   button.addEventListener("click", (event) => {
     const selectedColor = event.target.getAttribute("data-color");
     const hex = event.target.getAttribute("hex");
+    document.querySelectorAll(".hardware-color").forEach((button) => {
+      button.classList.remove("selected");
+    });
 
+    // Add the 'selected' class to the clicked color button
+    event.target.classList.add("selected");
     if (hex) {
       // If the element has a hex attribute, create a customColor object
       const customColor = {
@@ -704,13 +821,54 @@ function applyWhiteColor() {
   }
 }
 
-document.querySelectorAll(".grille-option").forEach((button) => {
-  button.addEventListener("click", () => {
+document.querySelectorAll(".grille-option").forEach((option) => {
+  option.addEventListener("click", (event) => {
     // Get the value of the data-pattern attribute
-    const pattern = button.getAttribute("data-pattern");
+    const pattern = option.getAttribute("data-pattern");
     showGrillType(pattern);
 
-    // Log it out
+    // Remove the 'selected' class from all options
+    document.querySelectorAll(".grille-option").forEach((option) => {
+      option.classList.remove("selected");
+    });
+
+    // Add the 'selected' class to the clicked option
+    option.classList.add("selected");
+
+    // Log the selected pattern
     console.log(`Selected grille pattern: ${pattern}`);
+  });
+});
+
+document.querySelectorAll(".nav-item.center").forEach((element) => {
+  element.addEventListener("click", (event) => {
+    const selectedColor = "white";
+    const extColor = "black";
+    console.log(`Selected color : ${selectedColor}`);
+
+    interiorColor = selectedColor;
+
+    // Remove the 'selected' class from all color buttons
+    document.querySelectorAll(".interior-color").forEach((button) => {
+      button.classList.remove("selected");
+    });
+
+    setColor("Interior", interiorColors[interiorColor]);
+    updateExteriorColorOptions(selectedColor);
+    setColor("Exterior", interiorColors[extColor]);
+    document.querySelectorAll(".hardware-color").forEach((button) => {
+      button.classList.remove("selected");
+    });
+
+    // Add the 'selected' class to the clicked color button
+    applyWhiteColor();
+    const pattern = "traditional";
+    hideAllGrills();
+    showGrillType(pattern);
+
+    // Remove the 'selected' class from all options
+    document.querySelectorAll(".grille-option").forEach((option) => {
+      option.classList.remove("selected");
+    });
   });
 });
