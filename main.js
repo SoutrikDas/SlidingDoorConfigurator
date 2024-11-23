@@ -13,6 +13,19 @@ let interiorColor = "white";
 let exteriorColor = "black";
 let handleColor = undefined;
 let myMaterials = [];
+let interiorCameraPos = [
+  0.9080488874565105, -3.366425992671914, 2.148017341436057,
+];
+let interiorCameraTarget = [
+  0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
+];
+let exteriorCameraPos = [
+  1.003572766898403, 3.5336761869366797, 1.9778968765932783,
+];
+let exteriorCameraTarget = [
+  0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
+];
+
 // Function to show the correct page and hide others
 function navigateTo(page) {
   // Hide all pages
@@ -311,6 +324,7 @@ document.querySelectorAll(".interior-color").forEach((element) => {
 });
 
 function interiorColorSelectHandler(event) {
+  focusInterior();
   console.log(`Button pressed : ${event.target}`);
   const selectedColor = event.target.getAttribute("data-color");
   console.log(`Selected color : ${selectedColor}`);
@@ -447,6 +461,7 @@ function updateExteriorColorOptions(selectedInteriorColor) {
 }
 
 function exteriorColorSelectHandler(event) {
+  focusExterior();
   const selectedColor = event.target.getAttribute("data-color");
   console.log(`Selected color : ${selectedColor}`);
   document.querySelectorAll(".exterior-color").forEach((button) => {
@@ -872,3 +887,37 @@ document.querySelectorAll(".nav-item.center").forEach((element) => {
     });
   });
 });
+
+function focusExterior() {
+  let exteriorCameraPos = [
+    1.003572766898403, 3.5336761869366797, 1.9778968765932783,
+  ];
+  let exteriorCameraTarget = [
+    0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
+  ];
+  api.setCameraLookAt(
+    exteriorCameraPos,
+    exteriorCameraTarget,
+    2,
+    function (err) {
+      if (err) console.error(err);
+    }
+  );
+}
+
+function focusInterior() {
+  let interiorCameraPos = [
+    0.9080488874565105, -3.366425992671914, 2.148017341436057,
+  ];
+  let interiorCameraTarget = [
+    0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
+  ];
+  api.setCameraLookAt(
+    interiorCameraPos,
+    interiorCameraTarget,
+    2,
+    function (err) {
+      if (err) console.error(err);
+    }
+  );
+}
