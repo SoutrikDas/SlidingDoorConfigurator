@@ -1,6 +1,6 @@
 // Initialize Sketchfab Viewer
 const iframe = document.getElementById("api-frame");
-const uid = "4cc9cac1684740d88afa3ba5708b5da5"; // Replace with your model's UID
+const uid = "df948c96bc0c435b95b129ca0ff37cd0"; // Replace with your model's UID
 let api;
 const version = "1.12.1";
 let base = {};
