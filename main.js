@@ -13,6 +13,51 @@ let interiorColor = "white";
 let exteriorColor = "black";
 let handleColor = undefined;
 let myMaterials = [];
+const cameraSettings = {
+  laptop: {
+    interior: {
+      position: [0.9080488874565105, -3.366425992671914, 2.148017341436057],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+    intermediate: {
+      position: [-2.4443003885814094, 0.08658094024337017, 2.351424320688789],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+    exterior: {
+      position: [1.003572766898403, 3.5336761869366797, 1.9778968765932783],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+  },
+  tablet: {
+    interior: {
+      position: [0.9080488874565018, -6.155680329175703, 3.054301013169183],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+    exterior: {
+      position: [1.0896386906179043, 6.5840493025961395, 1.333295754767758],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+    intermediate: {
+      position: [-5.480077250921402, 0.11091615877318138, 2.4091204915233346],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+  },
+  phone: {
+    interior: {
+      position: [0.9080488874565105, -3.366425992671914, 2.148017341436057],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+    intermediate: {
+      position: [-2.4443003885814094, 0.08658094024337017, 2.351424320688789],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+    exterior: {
+      position: [1.003572766898403, 3.5336761869366797, 1.9778968765932783],
+      target: [0.9080488874564873, 0.058943422061014494, 1.0350473517155412],
+    },
+  },
+};
+
 let interiorCameraPos = [
   0.9080488874565105, -3.366425992671914, 2.148017341436057,
 ];
@@ -181,12 +226,28 @@ function logAllParts(api) {
 
 function onModelLoaded(api) {
   console.log("Model has been loaded");
+  console.log(`Device is ${deviceType()}`);
   logAllParts(api);
   getSliderWorldCoordinates(api);
   hideAllGrills();
   // Show the default grill (Traditional, for instance)
   showGrillType("traditional");
   logAllMaterials(api);
+  if (deviceType() == "tablet") {
+    console.log("Setting tab to tab interior");
+    api.setCameraLookAt(
+      cameraSettings.tablet.interior.position,
+      cameraSettings.tablet.interior.target,
+      2,
+      (err) => {
+        if (!err) {
+          console.log("Camera moved successfully!");
+        } else {
+          console.error("Error setting camera:", err);
+        }
+      }
+    );
+  }
 }
 
 function getSliderWorldCoordinates(api) {
@@ -885,39 +946,203 @@ document.querySelectorAll(".nav-item.center").forEach((element) => {
     document.querySelectorAll(".grille-option").forEach((option) => {
       option.classList.remove("selected");
     });
+
+    api.recenterCamera(function (err) {
+      if (!err) {
+        console.log("Camera recentered");
+      }
+    });
   });
 });
 
-function focusExterior() {
-  let exteriorCameraPos = [
-    1.003572766898403, 3.5336761869366797, 1.9778968765932783,
-  ];
-  let exteriorCameraTarget = [
-    0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
-  ];
-  api.setCameraLookAt(
-    exteriorCameraPos,
-    exteriorCameraTarget,
-    2,
-    function (err) {
-      if (err) console.error(err);
-    }
-  );
+// function focusExterior() {
+//   let exteriorCameraPos = [
+//     1.003572766898403, 3.5336761869366797, 1.9778968765932783,
+//   ];
+//   let exteriorCameraTarget = [
+//     0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
+//   ];
+//   api.setCameraLookAt(
+//     exteriorCameraPos,
+//     exteriorCameraTarget,
+//     2,
+//     function (err) {
+//       if (err) console.error(err);
+//     }
+//   );
+// }
+
+// function focusInterior() {
+//   let interiorCameraPos = [
+//     0.9080488874565105, -3.366425992671914, 2.148017341436057,
+//   ];
+//   let interiorCameraTarget = [
+//     0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
+//   ];
+//   api.setCameraLookAt(
+//     interiorCameraPos,
+//     interiorCameraTarget,
+//     2,
+//     function (err) {
+//       if (err) console.error(err);
+//     }
+//   );
+// }
+
+function deviceType() {
+  const width = window.innerWidth;
+
+  if (width <= 768) {
+    console.log("phone");
+    return "phone";
+  } else if (width > 768 && width <= 1200) {
+    console.log("tablet");
+    return "tablet";
+  } else {
+    console.log("laptop");
+    return "laptop";
+  }
 }
 
-function focusInterior() {
-  let interiorCameraPos = [
-    0.9080488874565105, -3.366425992671914, 2.148017341436057,
-  ];
-  let interiorCameraTarget = [
-    0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
-  ];
-  api.setCameraLookAt(
-    interiorCameraPos,
-    interiorCameraTarget,
-    2,
-    function (err) {
-      if (err) console.error(err);
-    }
+function isNearPosition(currentPos, targetPos, threshold = 0.05) {
+  return (
+    Math.abs(currentPos[0] - targetPos[0]) < threshold &&
+    Math.abs(currentPos[1] - targetPos[1]) < threshold &&
+    Math.abs(currentPos[2] - targetPos[2]) < threshold
   );
 }
+function focusExterior() {
+  // Get the current device type (laptop or tablet)
+  const device = deviceType(); // Returns either 'laptop' or 'tablet'
+
+  // Get the camera settings for the current device
+  const exterior = cameraSettings[device].exterior;
+  const interior = cameraSettings[device].interior;
+  const intermediate = cameraSettings[device].intermediate;
+
+  // Get the current camera position and target
+  api.getCameraLookAt(function (err, camera) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const currentPosition = camera.position;
+
+    // Check if the current camera is near the interior position
+    if (isNearPosition(currentPosition, interior.position)) {
+      console.log(
+        "Dest:Exterior Initial:Near Interior Path:Intermediate needed"
+      );
+      setCamera(intermediate.position, intermediate.target, 1);
+      setTimeout(delayedExterior, 700);
+    } else {
+      setCamera(exterior.position, exterior.target, 2);
+    }
+  });
+}
+function delayedExterior() {
+  const exterior = cameraSettings[deviceType()].exterior;
+  setCamera(exterior.position, exterior.target, 1);
+}
+
+// Function to focus on the interior, with checks for intermediate position
+function focusInterior() {
+  // Get the current device type (laptop or tablet)
+  const device = deviceType(); // Returns either 'laptop' or 'tablet'
+
+  // Get the camera settings for the current device
+  const interior = cameraSettings[device].interior;
+  const exterior = cameraSettings[device].exterior;
+  const intermediate = cameraSettings[device].intermediate;
+
+  // Get the current camera position and target
+  api.getCameraLookAt(function (err, camera) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const currentPosition = camera.position;
+
+    // Check if the current camera is near the exterior position
+    if (isNearPosition(currentPosition, exterior.position)) {
+      console.log(
+        "Dest:Interior Initial:Near Exterior Path:Intermediate needed"
+      );
+      setCamera(intermediate.position, intermediate.target, 1);
+      setTimeout(delayedInterior, 700);
+    } else {
+      setCamera(interior.position, interior.target, 2);
+    }
+  });
+}
+function delayedInterior() {
+  const interior = cameraSettings[deviceType()].interior;
+  setCamera(interior.position, interior.target, 1);
+}
+
+function setCamera(position, target, duration = 2, callback) {
+  api.setCameraLookAt(position, target, duration, function (err) {
+    if (err) {
+      console.error("Error setting camera:", err);
+    }
+    if (callback) {
+      callback();
+    }
+  });
+}
+
+// Hook up buttons to camera settings
+document.getElementById("interiorBtn").addEventListener("click", function () {
+  const interior = cameraSettings.laptop.interior;
+  setCamera(interior.position, interior.target);
+});
+
+document.getElementById("exteriorBtn").addEventListener("click", function () {
+  const exterior = cameraSettings.laptop.exterior;
+  setCamera(exterior.position, exterior.target);
+});
+
+document
+  .getElementById("intermediateBtn")
+  .addEventListener("click", function () {
+    const intermediate = cameraSettings.laptop.intermediate;
+    setCamera(intermediate.position, intermediate.target);
+  });
+
+document.getElementById("setCamera").addEventListener("click", function () {
+  // Retrieve input values
+  const position = [
+    parseFloat(document.getElementById("cameraX").value) || 0,
+    parseFloat(document.getElementById("cameraY").value) || 0,
+    parseFloat(document.getElementById("cameraZ").value) || 0,
+  ];
+  const target = [
+    parseFloat(document.getElementById("targetX").value) || 0,
+    parseFloat(document.getElementById("targetY").value) || 0,
+    parseFloat(document.getElementById("targetZ").value) || 0,
+  ];
+
+  // Call the API to set the camera position
+  api.setCameraLookAt(position, target, 2, function (err) {
+    if (!err) {
+      console.log("Camera moved to:", position, "Targeting:", target);
+    } else {
+      console.error("Error setting camera:", err);
+    }
+  });
+});
+
+// Event Listener for "Get Position" Button
+document.getElementById("getPosition").addEventListener("click", function () {
+  // Call the API to get the current camera position and target
+  api.getCameraLookAt(function (err, camera) {
+    if (!err) {
+      console.log("Current Camera Position:", camera.position);
+      console.log("Current Camera Target:", camera.target);
+    } else {
+      console.error("Error getting camera position:", err);
+    }
+  });
+});
