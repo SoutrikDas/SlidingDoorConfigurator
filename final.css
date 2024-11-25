@@ -17,7 +17,7 @@ body {
   display: flex;
   width: 100%;
   /* max-width: 1200px; */
-  height: 80vh;
+  height: 100vh;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
@@ -259,14 +259,16 @@ h3 {
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    min-height: 80vh;
-    margin: 5px;
+    min-height: 100vh;
+    margin: 0px;
     height: auto;
   }
 
   .iframe-container {
+    flex: unset;
     width: 100%;
-    min-height: 60vh;
+    height: 60vh;
+    min-height: 50vh;
   }
 
   .iframe-container iframe {
@@ -379,6 +381,7 @@ h3 {
 .phone-only .page2,
 .phone-only .page3,
 .phone-only .page4 {
+  overflow-y: scroll;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -413,9 +416,13 @@ h3 {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  height: 10vh;
   background-color: #fff;
   border-top: 1px solid #ddd;
-  position: sticky; /* Stays at the bottom of the container */
+  position: fixed;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   bottom: 0;
 }
 
