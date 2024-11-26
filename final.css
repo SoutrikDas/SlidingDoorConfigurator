@@ -11,6 +11,7 @@ body {
   align-items: center;
   height: 100vh;
   background-color: #f9f9f9;
+  padding-top: env(safe-area-inset-top);
 }
 
 .container {
