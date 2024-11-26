@@ -755,6 +755,9 @@ function applyMorningSkyGrayColor() {
       188 / 255, // G value for Morning Sky Gray
       188 / 255, // B value for Morning Sky Gray
     ]; // RGB to [0, 1] range
+    // materialToChange.channels.AlbedoPBR.color = hexToRgbArray(
+    //   interiorColors["morning-sky-gray"]
+    // );
 
     // Set GlossinessPBR (shininess) - low gloss for matte plastic
     materialToChange.channels.GlossinessPBR.factor = 0.25; // Matte finish
@@ -879,15 +882,21 @@ function applySatinNickelColor() {
     materialToChange.channels.AlbedoPBR.factor = 1;
     materialToChange.channels.AlbedoPBR.enable = true;
     materialToChange.channels.AlbedoPBR.color = [
-      187 / 255,
-      177 / 255,
-      165 / 255,
+      210 / 255, // Light silver base
+      210 / 255,
+      205 / 255,
     ];
 
-    materialToChange.channels.GlossinessPBR.factor = 0.9;
-    materialToChange.channels.MetalnessPBR.factor = 0.95;
-    materialToChange.channels.RoughnessPBR.factor = 0.15;
-    materialToChange.channels.SpecularPBR.factor = 0.85;
+    materialToChange.channels.EmitColor = {
+      enable: true,
+      color: [220 / 255, 220 / 255, 220 / 255], // Soft silver glow
+      factor: 0.2, // Subtle emission, not overpowering
+    };
+
+    materialToChange.channels.GlossinessPBR.factor = 0.95; // Higher glossiness
+    materialToChange.channels.MetalnessPBR.factor = 1; // Fully metallic
+    materialToChange.channels.RoughnessPBR.factor = 0.05; // Very smooth and shiny
+    materialToChange.channels.SpecularPBR.factor = 0.9; // High specular reflection
 
     api.setMaterial(materialToChange, function () {
       console.log("Satin Nickel material updated successfully");
@@ -1232,7 +1241,7 @@ function updateMaterial(channelName, value, type) {
   // Find the material you want to update
   for (var i = 0; i < myMaterials.length; i++) {
     var m = myMaterials[i];
-    if (m.name == "Interior") {
+    if (m.name == "HandleMaterial") {
       materialToChange = m;
       console.log(`Material to Change has been found`);
     }
