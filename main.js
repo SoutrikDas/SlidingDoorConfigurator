@@ -71,6 +71,38 @@ let exteriorCameraTarget = [
   0.9080488874564873, 0.058943422061014494, 1.0350473517155412,
 ];
 
+const materialChannels = {
+  AOPBR: { type: "number", min: 0, max: 1, step: 0.01 },
+  AlbedoPBR: { type: "color" },
+  Anisotropy: { type: "number", min: 0, max: 1, step: 0.01 },
+  BumpMap: { type: "file" },
+  CavityPBR: { type: "number", min: 0, max: 1, step: 0.01 },
+  ClearCoat: { type: "number", min: 0, max: 1, step: 0.01 },
+  ClearCoatNormalMap: { type: "file" },
+  ClearCoatRoughness: { type: "number", min: 0, max: 1, step: 0.01 },
+  DiffuseColor: { type: "color" },
+  DiffuseIntensity: { type: "number", min: 0, max: 1, step: 0.01 },
+  DiffusePBR: { type: "color" },
+  Displacement: { type: "file" },
+  EmitColor: { type: "color" },
+  GlossinessPBR: { type: "number", min: 0, max: 1, step: 0.01 },
+  Matcap: { type: "file" },
+  MetalnessPBR: { type: "number", min: 0, max: 1, step: 0.01 },
+  NormalMap: { type: "file" },
+  Opacity: { type: "number", min: 0, max: 1, step: 0.01 },
+  RoughnessPBR: { type: "number", min: 0, max: 1, step: 0.01 },
+  SpecularColor: { type: "color" },
+  SpecularF0: { type: "number", min: 0, max: 1, step: 0.01 },
+  SpecularHardness: { type: "number", min: 0, max: 1, step: 0.01 },
+  SpecularPBR: { type: "number", min: 0, max: 1, step: 0.01 },
+  SubsurfaceScattering: { type: "number", min: 0, max: 1, step: 0.01 },
+  SubsurfaceTranslucency: { type: "number", min: 0, max: 1, step: 0.01 },
+};
+
+const myMaterialsv2 = [
+  { name: "Interior", channels: {} }, // Example material
+];
+
 // Function to show the correct page and hide others
 function navigateTo(page) {
   // Hide all pages
@@ -120,10 +152,12 @@ document
   .addEventListener("click", () => navigateTo("page1")); // Going right from page4 to page1
 const interiorColors = {
   white: "#f3f4f5",
-  black: "#16151c",
+  // black: "#16151c",
+  black: "#0d0d0d",
   brown: "#514431",
   tan: "#c8baa5",
-  "morning-sky-gray": "#cecfd0",
+  // "morning-sky-gray": "#cecfd0",
+  "morning-sky-gray": "#a2a0a0",
 };
 
 function hexToRgbArray(hex) {
@@ -248,6 +282,8 @@ function onModelLoaded(api) {
       }
     );
   }
+
+  initializeMaterialEditor();
 }
 
 function getSliderWorldCoordinates(api) {
@@ -1146,3 +1182,89 @@ document.getElementById("getPosition").addEventListener("click", function () {
     }
   });
 });
+
+function createMaterialInput(name, options) {
+  const container = document.createElement("div");
+  container.classList.add("material-input");
+
+  const label = document.createElement("label");
+  label.textContent = name;
+
+  const input = document.createElement("input");
+  input.name = name;
+
+  if (options.type === "number" || options.type === "range") {
+    input.type = "range";
+    input.min = options.min;
+    input.max = options.max;
+    input.step = options.step;
+  } else {
+    input.type = options.type;
+  }
+
+  container.appendChild(label);
+  container.appendChild(input);
+
+  return container;
+}
+
+function initializeMaterialEditor() {
+  const container = document.getElementById("input-container");
+  Object.entries(materialChannels).forEach(([name, options]) => {
+    const inputElement = createMaterialInput(name, options);
+
+    // Add event listener to automatically update the material
+    inputElement.addEventListener("input", (event) => {
+      updateMaterial(name, event.target.value, options.type);
+    });
+
+    container.appendChild(inputElement);
+  });
+}
+
+// Function to update material based on changes
+function updateMaterial(channelName, value, type) {
+  console.log(
+    `Update Material for channel:${channelName} val:${value} type:${type}`
+  );
+  let materialToChange;
+
+  // Find the material you want to update
+  for (var i = 0; i < myMaterials.length; i++) {
+    var m = myMaterials[i];
+    if (m.name == "Interior") {
+      materialToChange = m;
+      console.log(`Material to Change has been found`);
+    }
+  }
+
+  if (!materialToChange) {
+    console.error("Material not found!");
+    return;
+  }
+
+  // Update the material's channel based on input type
+  if (type === "color") {
+    console.log("Type = color , value = ");
+    console.log(value);
+    materialToChange.channels[channelName] = {
+      factor: 1,
+      enable: true,
+      color: hexToRgbArray(value),
+      // color: value,
+    };
+  } else if (type === "number") {
+    materialToChange.channels[channelName] = {
+      factor: parseFloat(value),
+      enable: true,
+    };
+  }
+
+  // Apply the changes to the model
+  api.setMaterial(materialToChange);
+}
+
+function parseHexToRgbArray(hex) {
+  const bigint = parseInt(hex.slice(1), 16);
+  return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+}

@@ -3,7 +3,9 @@
   margin: 0;
   padding: 0;
 }
-
+.debug {
+  display: none;
+}
 body {
   font-family: "Roboto", sans-serif;
   display: flex;
