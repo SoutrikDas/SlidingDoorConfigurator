@@ -153,7 +153,8 @@ document
 const interiorColors = {
   white: "#f3f4f5",
   // black: "#16151c",
-  black: "#0d0d0d",
+  // black: "#0d0d0d",
+  black: "#000000",
   brown: "#514431",
   tan: "#c8baa5",
   // "morning-sky-gray": "#cecfd0",
@@ -1241,7 +1242,7 @@ function updateMaterial(channelName, value, type) {
   // Find the material you want to update
   for (var i = 0; i < myMaterials.length; i++) {
     var m = myMaterials[i];
-    if (m.name == "HandleMaterial") {
+    if (m.name == "Interior") {
       materialToChange = m;
       console.log(`Material to Change has been found`);
     }
